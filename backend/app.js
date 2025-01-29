@@ -53,8 +53,26 @@ app.get("/docs", (req, res) => {
   res.redirect(postmanDocsUrl);
 });
 
+app.get("/health", async (req, res) => {
+  const mongoState = mongoose.connection.readyState;
+
+  /*
+   Mongoose connection states:
+   0: disconnected
+   1: connected
+   2: connecting
+   3: disconnecting
+  */
+
+  if (mongoState === 1) {
+    res.status(200).json({ status: "ok", mongoStatus: "connected" });
+  } else {
+    res.status(500).json({ status: "error", mongoStatus: "not connected" });
+  }
+});
+
 // Error Handling middleware
-http: app.use(errorHandler);
+app.use(errorHandler);
 app.listen(PORT, () => {
   mongodbConnect();
   console.log(`Server is listening on port: ${PORT}`);
