@@ -11,6 +11,8 @@ import authRoutes from "./routes/authRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
 import carImageRoutes from "./routes/carImageRoutes.js";
 
+const yamlFilePath = path.resolve(__dirname, "docs", "swagger.yaml");
+
 dotenv.config();
 
 const app = express();
@@ -36,7 +38,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/carImage", carImageRoutes);
 app.use("/api/v1/cars", carRoutes);
 
-const swaggerDocument = YAML.load(path.join("./docs/swagger.yaml"));
+const swaggerDocument = YAML.load(yamlFilePath);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error Handling middleware
