@@ -28,6 +28,8 @@ const corsOptions = {
     "http://spyneai-cars-rkgr.vercel.app",
     "http://localhost:3000",
     "https://spyneai-cars.vercel.app",
+    "https://spyneai-cars-abhishek-mauryas-projects-6a943e29.vercel.app",
+    "https://spyneai-cars-git-main-abhishek-mauryas-projects-6a943e29.vercel.app/auth/login",
   ],
   credentials: true,
   allowedHeaders: ["Content-type", "Accept", "Authorization"],
