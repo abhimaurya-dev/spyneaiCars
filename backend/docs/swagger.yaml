@@ -2,136 +2,741 @@ openapi: 3.0.0
 info:
   title: SpyneAI-assignment
   version: 1.0.0
-  description: API documentation for SpyneAI assignment
 servers:
   - url: http://127.0.0.1:8000
-    description: Local development server
-
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: auth
+  - name: cars
+  - name: carsImage
 paths:
   /api/v1/auth/register:
     post:
-      summary: Register a new user
-      description: Register a new user with name, email, and password.
+      tags:
+        - auth
+      summary: register
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               type: object
-              properties:
-                name:
-                  type: string
-                  example: test2
-                email:
-                  type: string
-                  format: email
-                  example: test2@mail.com
-                password:
-                  type: string
-                  example: test2
+              example:
+                name: test2
+                email: test2@mail.com
+                password: test2
       responses:
         "201":
-          description: User created successfully
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "180"
+            ETag:
+              schema:
+                type: string
+                example: W/"b4-IpnRSglulcxqKUKJIXFNeOIgerg"
+            Date:
+              schema:
+                type: string
+                example: Tue, 28 Jan 2025 13:43:06 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  user:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: test2
-                      email:
-                        type: string
-                        example: test2@mail.com
-                      password:
-                        type: string
-                        example: $2b$10$AEzb5A/bAu5G6lx57QIrX.OuVM9KtfDi/KwL2rju.cYPQK3RoVUZG
-                      _id:
-                        type: string
-                        example: 6798dee952bb3b3e50e6d2d3
-                      __v:
-                        type: integer
-                        example: 0
+              example:
+                success: true
+                user:
+                  name: test2
+                  email: test2@mail.com
+                  password: $2b$10$AEzb5A/bAu5G6lx57QIrX.OuVM9KtfDi/KwL2rju.cYPQK3RoVUZG
+                  _id: 6798dee952bb3b3e50e6d2d3
+                  __v: 0
         "409":
-          description: Email already exists
+          description: Conflict
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "48"
+            ETag:
+              schema:
+                type: string
+                example: W/"30-ZvVAuUXJ9Xxu87X3H+A/zJwyUeA"
+            Date:
+              schema:
+                type: string
+                example: Tue, 28 Jan 2025 13:39:28 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: Email already exists
-
+              example:
+                success: false
+                error: Email already exists
   /api/v1/auth/login:
     post:
-      summary: Login a user
-      description: Login a user with email and password.
+      tags:
+        - auth
+      summary: login
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                  example: test@mail.com
-                password:
-                  type: string
-                  example: test
+              example:
+                email: test@mail.com
+                password: test
       responses:
         "200":
-          description: Login successful
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "360"
+            ETag:
+              schema:
+                type: string
+                example: W/"168-XBtXUeE0dbVEPhfSJ9SRHNOAQEk"
+            Date:
+              schema:
+                type: string
+                example: Tue, 28 Jan 2025 13:31:24 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  user:
-                    type: object
-                    properties:
-                      _id:
-                        type: string
-                        example: 6798da69424835c19e96accb
-                      name:
-                        type: string
-                        example: test
-                      email:
-                        type: string
-                        example: test@mail.com
-                      password:
-                        type: string
-                        example: $2b$10$2vwBnw6nikwHUAJyRY2I5efdxR9tcsaMazsjHb8p1CuT629P/Dxdi
-                      __v:
-                        type: integer
-                        example: 0
-                  token:
-                    type: string
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+              example:
+                success: true
+                user:
+                  _id: 6798da69424835c19e96accb
+                  name: test
+                  email: test@mail.com
+                  password: $2b$10$2vwBnw6nikwHUAJyRY2I5efdxR9tcsaMazsjHb8p1CuT629P/Dxdi
+                  __v: 0
+                token: "{{vault:json-web-token}}"
         "401":
-          description: Invalid credentials
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "47"
+            ETag:
+              schema:
+                type: string
+                example: W/"2f-XSf5vxVMGbzV3XFF+nj3Vg/S+zA"
+            Date:
+              schema:
+                type: string
+                example: Tue, 28 Jan 2025 13:30:52 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: Invalid Credentials
+              example:
+                success: false
+                error: Invalid Credentials
+  /api/v1/cars/createCars:
+    post:
+      tags:
+        - cars
+      summary: createCars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                carName: Postman Test Car
+                description: This is a postman test car (logged In)
+                tags:
+                  - "2025"
+                  - spyneai
+                  - postman
+                  - test
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "247"
+            ETag:
+              schema:
+                type: string
+                example: W/"f7-36NIjSRcxzPpgHGXefJOBe5mJls"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:17:00 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                product:
+                  carName: Postman Test Car
+                  description: This is a postman test car (logged In)
+                  tags:
+                    - "2025"
+                    - spyneai
+                    - postman
+                    - test
+                  createdBy: 6798da69424835c19e96accb
+                  _id: 679a8cbcb32e2c69bf2ec816
+                  __v: 0
+                  images: []
+        "400":
+          description: Bad Request
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "52"
+            ETag:
+              schema:
+                type: string
+                example: W/"34-Dr8lcFhIk5JcslOh6VkW+Cz4rlU"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:18:28 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: false
+                error: All fields are required.
+        "401":
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "24"
+            ETag:
+              schema:
+                type: string
+                example: W/"18-XPDV80vbMk4yY1/PADG4jYM4rSI"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:17:42 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorized
+  /api/v1/cars/delete/679a8cbcb32e2c69bf2ec816:
+    delete:
+      tags:
+        - cars
+      summary: deleteCar
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "43"
+            ETag:
+              schema:
+                type: string
+                example: W/"2b-6Qi8S8h6YPD2q8ZKjBfrTGi/dig"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:21:36 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Product deleted successfully!
+        "401":
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "24"
+            ETag:
+              schema:
+                type: string
+                example: W/"18-XPDV80vbMk4yY1/PADG4jYM4rSI"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:21:06 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorized
+  /api/v1/cars/update/679a8e11b32e2c69bf2ec822:
+    put:
+      tags:
+        - cars
+      summary: updateCar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                carName: Updated Postman Test Car
+                description: This is a postman test car (logged In)
+                tags:
+                  - "2025"
+                  - spyneai
+                  - postman
+                  - test
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "243"
+            ETag:
+              schema:
+                type: string
+                example: W/"f3-Z8mqpC5iqMpLJynBWx7mBxKEgxE"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:24:11 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                product:
+                  _id: 679a8e11b32e2c69bf2ec822
+                  carName: Updated Postman Test Car
+                  description: This is a postman test car (logged In)
+                  tags:
+                    - "2025"
+                    - spyneai
+                    - postman
+                    - test
+                  createdBy: 6798da69424835c19e96accb
+                  __v: 0
+        "401":
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "24"
+            ETag:
+              schema:
+                type: string
+                example: W/"18-XPDV80vbMk4yY1/PADG4jYM4rSI"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:23:43 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorized
+  /api/v1/carsImage/upload:
+    post:
+      tags:
+        - carsImage
+      summary: uploadImage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                carsId: ObjectId(1234)
+                images:
+                  - image
+                  - image2
+      responses:
+        "201":
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "154"
+            ETag:
+              schema:
+                type: string
+                example: W/"9a-UPtPkdyhuN3ncKPm71mwgQ9wZug"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:30:06 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                images:
+                  images:
+                    - base64/image
+                    - base64/image
+                  associatedCarId: 679a8e11b32e2c69bf2ec822
+                  _id: 679a8fce24ca00dcb6eb1547
+                  __v: 0
+        "401":
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: "true"
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: "24"
+            ETag:
+              schema:
+                type: string
+                example: W/"18-XPDV80vbMk4yY1/PADG4jYM4rSI"
+            Date:
+              schema:
+                type: string
+                example: Wed, 29 Jan 2025 20:29:42 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorized
