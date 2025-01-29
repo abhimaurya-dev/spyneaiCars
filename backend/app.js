@@ -66,6 +66,15 @@ app.get("/health", async (req, res) => {
   */
   const mongoUri = process.env.MONGO_URI;
   console.log(mongoUri);
+
+  mongoose
+    .connect(mongoUri)
+    .then(() => {
+      console.log("DB connected");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   if (mongoState === 1) {
     res.status(200).json({ status: "ok", mongoStatus: "connected" });
   } else {
