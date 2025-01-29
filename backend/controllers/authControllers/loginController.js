@@ -7,10 +7,6 @@ const loginController = async (req, res, next) => {
   const maxAgeInMilliseconds = maxAgeInDays * 24 * 60 * 60 * 1000;
   try {
     const { email, password } = req.body;
-    if (mongoose.ConnectionStates.connected) {
-      res.status(200).json({ message: "db not connected" });
-      next();
-    }
     console.log({ email, password });
     const user = await User.findOne({ email });
     console.log(user);
@@ -30,7 +26,7 @@ const loginController = async (req, res, next) => {
       sameSite: "strict",
     });
     console.log("success");
-    res.status(200).json({ success: true, user, token });
+    return res.status(200).json({ success: true, user, token });
   } catch (error) {
     console.log(error);
     next(error);
