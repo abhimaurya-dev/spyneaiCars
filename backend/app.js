@@ -42,23 +42,17 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/carImage", carImageRoutes);
 app.use("/api/v1/cars", carRoutes);
 
-const swaggerUICss =
-  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
-const swaggerOptions = {
-  customCss:
-    ".swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }",
-  customCssUrl: swaggerUICss,
-};
-
 const swaggerDocument = YAML.load(yamlFilePath);
-app.use(
-  "/docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, swaggerOptions)
-);
+app.use("/dev-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get("/docs", (req, res) => {
+  const postmanDocsUrl =
+    "https://documenter.getpostman.com/view/20868478/2sAYX2LiBd";
+  res.redirect(postmanDocsUrl);
+});
 
 // Error Handling middleware
-app.use(errorHandler);
+http: app.use(errorHandler);
 app.listen(PORT, () => {
   mongodbConnect();
   console.log(`Server is listening on port: ${PORT}`);
