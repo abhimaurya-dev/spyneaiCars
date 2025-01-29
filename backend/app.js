@@ -98,7 +98,13 @@ app.get("/health", async (req, res) => {
 });
 
 // Error Handling middleware
-app.use(errorHandler);
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Logs the error stack trace
+  res
+    .status(500)
+    .json({ message: "Internal Server Error", error: err.message });
+});
+// app.use(errorHandler);
 app.listen(PORT, () => {
   mongodbConnect();
   console.log(`Server is listening on port: ${PORT}`);
