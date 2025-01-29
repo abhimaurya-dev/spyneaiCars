@@ -16,7 +16,7 @@ export const fetchApi = async (url, body, method) => {
 
   try {
     const response = await fetch(
-      "http://spyneai-cars-rkgr.vercel.app/api/v1" + url,
+      "https://spyneai-cars-rkgr.vercel.app/api/v1" + url,
       options
     );
     return response.json();
