@@ -7,7 +7,7 @@ const loginController = async (req, res, next) => {
   const maxAgeInMilliseconds = maxAgeInDays * 24 * 60 * 60 * 1000;
   try {
     const { email, password } = req.body;
-    if (!mongoose.ConnectionStates.connected) {
+    if (mongoose.ConnectionStates.connected) {
       res.status(200).json({ message: "db not connected" });
       next();
     }
