@@ -6,7 +6,7 @@ const loginController = async (req, res, next) => {
   const maxAgeInMilliseconds = maxAgeInDays * 24 * 60 * 60 * 1000;
   try {
     const { email, password } = req.body;
-    console.log({ email, password });
+    // console.log({ email, password });
     const user = await User.findOne({ email });
     console.log(user);
     if (!user || !(await user.comparePassword(password)))
