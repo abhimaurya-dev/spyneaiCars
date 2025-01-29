@@ -42,8 +42,16 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/carImage", carImageRoutes);
 app.use("/api/v1/cars", carRoutes);
 
+const swaggerOptions = {
+  url: "/docs/swagger.yaml",
+};
+
 const swaggerDocument = YAML.load(yamlFilePath);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, swaggerOptions)
+);
 
 // Error Handling middleware
 app.use(errorHandler);
