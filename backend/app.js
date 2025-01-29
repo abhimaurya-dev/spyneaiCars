@@ -4,6 +4,8 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
 
 import { mongodbConnect } from "./config/db.js";
 import errorHandler from "./middlewares/errorMiddleware.js";
@@ -11,7 +13,8 @@ import authRoutes from "./routes/authRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
 import carImageRoutes from "./routes/carImageRoutes.js";
 
-const yamlFilePath = path.resolve(__dirname, "docs", "swagger.yaml");
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const yamlFilePath = resolve(__dirname, "docs", "swagger.yaml");
 
 dotenv.config();
 
