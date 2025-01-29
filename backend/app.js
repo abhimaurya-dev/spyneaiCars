@@ -54,55 +54,10 @@ app.get("/docs", (req, res) => {
   res.redirect(postmanDocsUrl);
 });
 
-app.get("/health", async (req, res) => {
-  const mongoState = mongoose.connection.readyState;
-
-  /*
-   Mongoose connection states:
-   0: disconnected
-   1: connected
-   2: connecting
-   3: disconnecting
-  */
-  const mongoUri = process.env.MONGO_URI;
-  console.log(mongoUri);
-  let connect;
-
-  let error;
-
-  mongoose
-    .connect(mongoUri)
-    .then(() => {
-      connect = "connected";
-    })
-    .catch((e) => {
-      error = e;
-    });
-  if (mongoState === 1) {
-    res.status(200).json({
-      status: "ok",
-      mongoStatus: "connected",
-      mongoUri,
-      connect,
-      error,
-    });
-  } else {
-    res.status(500).json({
-      status: "error",
-      mongoStatus: "not connected",
-      mongoUri,
-      connect,
-      error,
-    });
-  }
-});
-
 // Error Handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack); // Logs the error stack trace
-  res
-    .status(500)
-    .json({ message: "Internal Server Error", error: err.message });
+  res.status(500).json({ message: err.message });
 });
 // app.use(errorHandler);
 app.listen(PORT, () => {
