@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../../models/User.js";
+import mongoose from "mongoose";
 
 const loginController = async (req, res, next) => {
   const maxAgeInDays = 1;
@@ -7,6 +8,10 @@ const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     // console.log({ email, password });
+    if (!mongoose.ConnectionStates.connected) {
+      res.status(200).json({ message: "db not connected" });
+      next();
+    }
     const user = await User.findOne({ email });
     console.log(user);
     if (!user || !(await user.comparePassword(password)))
