@@ -8,6 +8,7 @@ const loginController = async (req, res, next) => {
     const { email, password } = req.body;
     console.log({ email, password });
     const user = await User.findOne({ email });
+    console.log(user);
     if (!user || !(await user.comparePassword(password)))
       throw { status: 401, message: "Invalid Credentials" };
     console.log(user);
