@@ -18,7 +18,11 @@ const PORT = process.env.PORT || 8000;
 
 app.use(express.json({ limit: "10mb" }));
 const corsOptions = {
-  origin: ["http://localhost:8000", "http://localhost:3000"],
+  origin: [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "https://spyneai-cars.vercel.app",
+  ],
   credentials: true,
   allowedHeaders: ["Content-type", "Accept", "Authorization"],
   methods: ["GET", "POST", "PUT", "DELETE"],
