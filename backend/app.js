@@ -64,7 +64,8 @@ app.get("/health", async (req, res) => {
    2: connecting
    3: disconnecting
   */
-
+  const mongoUri = process.env.MONGO_URI;
+  console.log(mongoUri);
   if (mongoState === 1) {
     res.status(200).json({ status: "ok", mongoStatus: "connected" });
   } else {
