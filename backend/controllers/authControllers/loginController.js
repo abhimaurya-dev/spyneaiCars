@@ -27,6 +27,7 @@ const loginController = async (req, res, next) => {
     console.log("success");
     res.status(200).json({ success: true, user, token });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
