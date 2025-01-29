@@ -25,6 +25,7 @@ app.use(express.json({ limit: "10mb" }));
 const corsOptions = {
   origin: [
     "http://localhost:8000",
+    "http://spyneai-cars-rkgr.vercel.app",
     "http://localhost:3000",
     "https://spyneai-cars.vercel.app",
   ],
