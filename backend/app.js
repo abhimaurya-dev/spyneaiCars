@@ -66,19 +66,34 @@ app.get("/health", async (req, res) => {
   */
   const mongoUri = process.env.MONGO_URI;
   console.log(mongoUri);
+  let connect;
+
+  let error;
 
   mongoose
     .connect(mongoUri)
     .then(() => {
-      console.log("DB connected");
+      connect = "connected";
     })
     .catch((e) => {
-      console.log(e);
+      error = e;
     });
   if (mongoState === 1) {
-    res.status(200).json({ status: "ok", mongoStatus: "connected" });
+    res.status(200).json({
+      status: "ok",
+      mongoStatus: "connected",
+      mongoUri,
+      connect,
+      error,
+    });
   } else {
-    res.status(500).json({ status: "error", mongoStatus: "not connected" });
+    res.status(500).json({
+      status: "error",
+      mongoStatus: "not connected",
+      mongoUri,
+      connect,
+      error,
+    });
   }
 });
 
