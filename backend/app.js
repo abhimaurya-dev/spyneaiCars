@@ -12,6 +12,7 @@ import errorHandler from "./middlewares/errorMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
 import carImageRoutes from "./routes/carImageRoutes.js";
+import mongoose from "mongoose";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const yamlFilePath = resolve(__dirname, "docs", "swagger.yaml");
